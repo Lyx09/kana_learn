@@ -197,7 +197,7 @@ def parseopt():
         'random', 'extended', 'help', 'src=', 'dst='])[0]
     for opt in options:
         if opt[0] == '-h' or opt[0] == '--help':
-            print(f'Usage ./{sys.argv[0]} [OPTIONS]... [SAVE_FILE]')
+            print(f'Usage {sys.argv[0]} [OPTIONS]... [SAVE_FILE]')
             print('A small program to learn japanese kanas')
             print('Mandatory arguments to long options are mandatory for short options too.')
             print('-o, --old            Include old/unused kana')
