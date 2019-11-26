@@ -65,73 +65,126 @@ def kana_from_table(romaji, hiragana, katakana):
 # GOJUON
 
 romaji = '''
-a ka sa  ta  na ha ma ya ra wa n 
-i ki shi chi ni hi mi /  ri wi /
-u ku su  tsu nu hu mu yu ru /  /
-e ke se  te  ne he me /  re we /
-o ko so  to  no ho mo yo ro wo /
+a   i   u   e   o
+ka  ki  ku  ke  ko
+sa  shi su  se  so
+ta  chi tsu te  to
+na  ni  nu  ne  no
+ha  hi  fu  he  ho
+ma  mi  mu  me  mo
+ya  /   yu  /   yo
+ra  ri  ru  re  ro
+wa  wi  /   we  wo
+n
 '''
 
 hiragana = '''
-あ か さ た な は ま や ら わ ん
-い き し ち に ひ み /  り ゐ /
-う く す つ ぬ ふ む ゆ る /  /
-え け せ て ね へ め /  れ ゑ /
-お こ そ と の ほ も よ ろ を /
+あ い う え お
+か き く け こ
+さ し す せ そ
+た ち つ て と
+な に ぬ ね の
+は ひ ふ へ ほ
+ま み む め も
+や /  ゆ /  よ
+ら り る れ ろ
+わ ゐ /  ゑ を
+ん /  /  /  /
 '''
 
 katakana = '''
-ア カ サ タ ナ ハ マ ヤ ラ ワ ン
-イ キ シ チ ニ ヒ ミ /  リ ヰ /
-ウ ク ス ツ ヌ フ ム ユ ル /  /
-エ ケ セ テ ネ ヘ メ /  レ ヱ /
-オ コ ソ ト ノ ホ モ ヨ ロ ヲ /
+ア イ ウ エ オ
+カ キ ク ケ コ
+サ シ ス セ ソ
+タ チ ツ テ ト
+ナ ニ ヌ ネ ノ
+ハ ヒ フ ヘ ホ
+マ ミ ム メ モ
+ヤ /  ユ /  ヨ
+ラ リ ル レ ロ
+ワ ヰ /  ヱ ヲ
+ン /  /  /  /
 '''
 
 # DIACRITICS
 
 romaji_diacrit = '''
-ga za da ba pa nga
-gi zi di bi pi ngi
-gu zu du bu pu ngu
-ge ze de be pe nge
-go zo do bo po ngo
+ga  gi  gu  ge  go
+za  zi  zu  ze  zo
+da  di  du  de  do
+ba  bi  bu  be  bo
+pa  pi  pu  pe  po
+nga ngi ngu nge ngo
 '''
 
 hiragana_diacrit = '''
-が ざ だ ば ぱ か゚ 
-ぎ じ ぢ び ぴ き゚ 
-ぐ ず づ ぶ ぷ く゚ 
-げ ぜ で べ ぺ け゚ 
-ご ぞ ど ぼ ぽ こ゚ 
+が ぎ ぐ げ ご
+ざ じ ず ぜ ぞ
+だ ぢ づ で ど
+ば び ぶ べ ぼ
+ぱ ぴ ぷ ぺ ぽ
+か゚ き゚ く゚ け゚ こ゚
 '''
 
 katakana_diacrit = '''
-ガ ザ ダ バ パ カ゚
-ギ ジ ヂ ビ ピ キ゚
-グ ズ ヅ ブ プ ク゚
-ゲ ゼ デ ベ ペ ケ゚
-ゴ ゾ ド ボ ポ コ゚
+ガ ギ グ ゲ ゴ
+ザ ジ ズ ゼ ゾ
+ダ ヂ ヅ デ ド
+バ ビ ブ ベ ボ
+パ ピ プ ペ ポ
+カ゚ キ゚ ク゚ ケ゚ コ゚
 '''
 
 # YOO_ON / DIGRAPHS
 
 romaji_digraph = '''
-kya sha cha nya hya mya rya gya ja bya pya ngya
-kyu shu chu nyu hyu myu ryu gyu ju byu pyu ngyu
-kyo sho cho nyo hyo myo ryo gyo jo byo pyo ngyo
+kya  kyu  kyo
+sha  shu  sho
+cha  chu  cho
+nya  nyu  nyo
+hya  hyu  hyo
+mya  myu  myo
+rya  ryu  ryo
+gya  gyu  gyo
+ja   ju   jo
+bya  byu  byo
+pya  pyu  pyo
+ngya ngyu ngyo
 '''
 
-hiragana_digraph = '''
-きゃ しゃ ちゃ にゃ ひゃ みゃ りゃ ぎゃ じゃ びゃ ぴゃ き゚ゃ
-きゅ しゅ ちゅ にゅ ひゅ みゅ りゅ ぎゅ じゅ びゅ ぴゅ き゚ゅ
-きょ しょ ちょ にょ ひょ みょ りょ ぎょ じょ びょ ぴょ き゚ょ
+hiragana_digraph
+=
+'''
+きゃ きゅ きょ
+しゃ しゅ しょ
+ちゃ ちゅ ちょ
+にゃ にゅ にょ
+ひゃ ひゅ ひょ
+みゃ みゅ みょ
+りゃ りゅ りょ
+ぎゃ ぎゅ ぎょ
+じゃ じゅ じょ
+びゃ びゅ びょ
+ぴゃ ぴゅ ぴょ
+き゚ゃ き゚ゅ き゚ょ
 '''
 
-katakana_digraphs =  '''
-キャ シャ チャ ニャ ヒャ ミャ リャ ギャ ジャ ヂャ ビャ ピャ
-キュ シュ チュ ニュ ヒュ ミュ リュ ギュ ジュ ヂュ ビュ ピュ
-キョ ショ チョ ニョ ヒョ ミョ リョ ギョ ジョ ヂョ ビョ ピョ
+katakana_digraphs
+=
+
+'''
+キャ キュ キョ
+シャ シュ ショ
+チャ チュ チョ
+ニャ ニュ ニョ
+ヒャ ヒュ ヒョ
+ミャ ミュ ミョ
+リャ リュ リョ
+ギャ ギュ ギョ
+ジャ ジュ ジョ
+ヂャ ヂュ ヂョ
+ビャ ビュ ビョ
+ピャ ピュ ピョ
 '''
 
 def clearscreen():
