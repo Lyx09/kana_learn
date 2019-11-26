@@ -150,9 +150,7 @@ pya  pyu  pyo
 ngya ngyu ngyo
 '''
 
-hiragana_digraph
-=
-'''
+hiragana_digraph = '''
 きゃ きゅ きょ
 しゃ しゅ しょ
 ちゃ ちゅ ちょ
@@ -167,10 +165,7 @@ hiragana_digraph
 き゚ゃ き゚ゅ き゚ょ
 '''
 
-katakana_digraphs
-=
-
-'''
+katakana_digraphs = '''
 キャ キュ キョ
 シャ シュ ショ
 チャ チュ チョ
@@ -194,33 +189,44 @@ def parseopt():
                 'diacritics' :  False,
                 'digraphs' :    False,
                 'old' :         False,
-                'shuffle' :     False,
+                'random' :      False,
                 'src' :         'hiragana',
                 'dest' :        'romaji'
             }
-    options = getopt(sys.argv[1:],'osages:d:' ,['diacritics', 'digraphs', 'old',
-        'shuffle', 'extended', 'src=', 'dst='])[0]
+    options = getopt(sys.argv[1:],'oragehs:d:' ,['diacritics', 'digraphs', 'old',
+        'shuffle', 'extended', 'help', 'src=', 'dst='])[0]
     for opt in options:
-        if opt[0] == 'o' or opt[0] == 'old':
+        if opt[0] == '-h' or opt[0] == '--help':
+            print(f'Usage ./{sys.argv[0]} [OPTIONS]... [SAVE_FILE]')
+            print('A small program to learn japanese kanas')
+            print('Mandatory arguments to long options are mandatory for short options too.')
+            print('-o, --old            Include old/unused kana')
+            print('-r, --random         Review kana in a random order')
+            print('-a, --diacritics     Include diacritics (dakuten and handakuten)')
+            print('-g, --digraphs       Include digraphs (yōon)')
+            print('-s, --src=ALPHABET   Source alphabet, what will be shown')
+            print('-d, --dest=ALPHABET  Destination alphabet, what you have to find')
+            print('                     ALPHABET is one of \'hiragana\', \'katakana\' or \'romaji\'')
+        elif opt[0] == '-o' or opt[0] == '--old':
             list_opt['old'] = True
-        if opt[0] == 's' or opt[0] == 'shuffle':
-            list_opt['shuffle'] = True
-        if opt[0] == 'a' or opt[0] == 'diacritics':
+        elif opt[0] == '-r' or opt[0] == '--random':
+            list_opt['random'] = True
+        elif opt[0] == '-a' or opt[0] == '--diacritics':
             list_opt['diacritics'] = True
-        if opt[0] == 'g' or opt[0] == 'digraphs':
+        elif opt[0] == '-g' or opt[0] == '--digraphs':
             list_opt['digraphs'] = True
-        if opt[0] == 's' or opt[0] == 'src':
+        elif opt[0] == '-s' or opt[0] == '--src':
             if opt[1] not in ['romaji', 'hiragana', 'katakana']:
                 print('Invalid source {opt[1]}')
                 exit(1)
             list_opt['src'] = opt[1]
-        if opt[0] == 'd' or opt[0] == 'dest':
+        elif opt[0] == '-d' or opt[0] == '--dest':
             if opt[1] not in ['romaji', 'hiragana', 'katakana']:
-                print('Invalid source {opt[1]}')
+                print(f'Invalid source {opt[1]}')
                 exit(1)
             list_opt['dest'] = opt[1]
         else:
-            print('Unknown option {opt[0]}')
+            print(f'Unknown option {opt[0]}')
             exit(1)
 
     return list_opt
@@ -236,7 +242,7 @@ def build_list(list_opt = None):
         kana_list.append(kana_from_table(romaji_digraph, hiragana_digraph,
             katakana_digraph))
 
-    if list_opt['shuffle']:
+    if list_opt['random']:
         random.shuffle(kana_list)
     return kana_list
 
