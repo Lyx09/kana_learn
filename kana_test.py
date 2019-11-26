@@ -194,19 +194,22 @@ def parseopt():
                 'dest' :        'romaji'
             }
     options = getopt(sys.argv[1:],'oragehs:d:' ,['diacritics', 'digraphs', 'old',
-        'shuffle', 'extended', 'help', 'src=', 'dst='])[0]
+        'random', 'extended', 'help', 'src=', 'dst='])[0]
     for opt in options:
         if opt[0] == '-h' or opt[0] == '--help':
             print(f'Usage ./{sys.argv[0]} [OPTIONS]... [SAVE_FILE]')
             print('A small program to learn japanese kanas')
             print('Mandatory arguments to long options are mandatory for short options too.')
             print('-o, --old            Include old/unused kana')
+            print('-h, --help            Display this text')
+            print('-e, --extended       Include extended kana combinations (vi, fa, ...)')
             print('-r, --random         Review kana in a random order')
             print('-a, --diacritics     Include diacritics (dakuten and handakuten)')
-            print('-g, --digraphs       Include digraphs (yōon)')
+            print('-g, --digraphs       Include digraphs (yōon) (sha, kyu, ryo, ...)')
             print('-s, --src=ALPHABET   Source alphabet, what will be shown')
             print('-d, --dest=ALPHABET  Destination alphabet, what you have to find')
             print('                     ALPHABET is one of \'hiragana\', \'katakana\' or \'romaji\'')
+            exit(1)
         elif opt[0] == '-o' or opt[0] == '--old':
             list_opt['old'] = True
         elif opt[0] == '-r' or opt[0] == '--random':
