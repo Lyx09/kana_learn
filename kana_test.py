@@ -1,8 +1,8 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from getopt import getopt
 import random
-import getopt
 import sys
 import os
 import re
@@ -40,14 +40,12 @@ class Color:
     reset  = '\u001b[0m'
 
 def table_to_list(table):
-    return re.split('\W+', table.strip())
+    return re.split('\s+', table.strip())
 
 def kana_from_table(romaji, hiragana, katakana):
     kana_list = []
     ziplist = list(zip(table_to_list(romaji), table_to_list(hiragana),
         table_to_list(katakana)))
-    print(ziplist)
-    getch()
     for k in ziplist:
         is_old = False
         if k[0] in ['wi', 'we', 'nga', 'ngi', 'ngu', 'nge', 'ngo']:
@@ -56,7 +54,7 @@ def kana_from_table(romaji, hiragana, katakana):
             kana_list.append(
                     {
                         'romaji' : k[0],
-                        'hiragana' : k[1], 
+                        'hiragana' : k[1],
                         'katakana' : k[2],
                         'old' : is_old
                         })
@@ -191,38 +189,51 @@ def clearscreen():
     os.system('clear')
 
 def parseopt():
-    print()
-
-def build_list(list_opt = None):
-    '''
-
-    0: Romaji
-    1: Hiragana
-    2: Katakana
-    3: Dakuten
-    4: Handakuten
-    5: Diacritics
-    6: Digraphs
-    7: Old
-    8: Shuffle
-    '''
-
-    if list_opt == None:
-        list_opt = {
+    # Default parameters
+    list_opt = {
                 'diacritics' :  False,
                 'digraphs' :    False,
-                'old' :         True,
-                'shuffle' :     True
-                }
+                'old' :         False,
+                'shuffle' :     False,
+                'src' :         'hiragana',
+                'dest' :        'romaji'
+            }
+    options = getopt(sys.argv[1:],'osages:d:' ,['diacritics', 'digraphs', 'old',
+        'shuffle', 'extended', 'src=', 'dst='])[0]
+    for opt in options:
+        if opt[0] == 'o' or opt[0] == 'old':
+            list_opt['old'] = True
+        if opt[0] == 's' or opt[0] == 'shuffle':
+            list_opt['shuffle'] = True
+        if opt[0] == 'a' or opt[0] == 'diacritics':
+            list_opt['diacritics'] = True
+        if opt[0] == 'g' or opt[0] == 'digraphs':
+            list_opt['digraphs'] = True
+        if opt[0] == 's' or opt[0] == 'src':
+            if opt[1] not in ['romaji', 'hiragana', 'katakana']:
+                print('Invalid source {opt[1]}')
+                exit(1)
+            list_opt['src'] = opt[1]
+        if opt[0] == 'd' or opt[0] == 'dest':
+            if opt[1] not in ['romaji', 'hiragana', 'katakana']:
+                print('Invalid source {opt[1]}')
+                exit(1)
+            list_opt['dest'] = opt[1]
+        else:
+            print('Unknown option {opt[0]}')
+            exit(1)
 
+    return list_opt
+
+def build_list(list_opt = None):
     kana_list = kana_from_table(romaji, hiragana, katakana)
-    
+
     if list_opt['diacritics']:
-        kana_list.append(kana_from_table(romaji_diacrit, hiragana_diacrit, 
+        kana_list.append(kana_from_table(romaji_diacrit, hiragana_diacrit,
             katakana_diacrit))
 
     if list_opt['digraphs']:
-        kana_list.append(kana_from_table(romaji_digraph, hiragana_digraph, 
+        kana_list.append(kana_from_table(romaji_digraph, hiragana_digraph,
             katakana_digraph))
 
     if list_opt['shuffle']:
@@ -232,20 +243,19 @@ def build_list(list_opt = None):
 
 def main():
     user_data = open('userdata.kana', 'w')
-    src = 'romaji'
-    dest = 'hiragana'
 
     # Check parameter: kana only, dakuten, handakuten, variations...
-    parseopt()
+    opts = parseopt()
 
     # load previous data
 
-    review_list = build_list()
+    # Build the training list
+    review_list = build_list(opts)
 
     for k in review_list:
         clearscreen()
 
-        print(f'What is the {dest} for {k[src]} ?'
+        print(f'What is the {opts["dest"]} for {k[opts["src"]]} ?'
         f'({Color.green}Q{Color.reset}/'
         f'{Color.yellow}W{Color.reset}/'
         f'{Color.red}E{Color.reset} or Z to exit)')
@@ -265,8 +275,8 @@ def main():
             print('e')
         else:
             print('How did you get here ?')
-        
-        print(f'It was {k[dest]}')
+
+        print(f'It was {k[opts["dest"]]}')
         c = getch()
 
 
