@@ -40,26 +40,6 @@ class Color:
     white  = '\u001b[37m'
     reset  = '\u001b[0m'
 
-def table_to_list(table):
-    return re.split('\s+', table.strip())
-
-def kana_from_table(romaji, hiragana, katakana):
-    kana_list = []
-    ziplist = list(zip(table_to_list(romaji), table_to_list(hiragana),
-        table_to_list(katakana)))
-    for k in ziplist:
-        is_old = False
-        if k[0] in ['wi', 'we', 'nga', 'ngi', 'ngu', 'nge', 'ngo']:
-            is_old = True
-        if k[0] != '/':
-            kana_list.append(
-                    {
-                        'romaji' : k[0],
-                        'hiragana' : k[1],
-                        'katakana' : k[2],
-                        'old' : is_old
-                        })
-    return kana_list
 
 # GOJUON
 
@@ -181,6 +161,27 @@ katakana_digraphs = '''
 ピャ ピュ ピョ
 '''
 
+def table_to_list(table):
+    return re.split('\s+', table.strip())
+
+def kana_from_table(romaji, hiragana, katakana):
+    kana_list = []
+    ziplist = list(zip(table_to_list(romaji), table_to_list(hiragana),
+        table_to_list(katakana)))
+    for k in ziplist:
+        is_old = False
+        if k[0] in ['wi', 'we', 'nga', 'ngi', 'ngu', 'nge', 'ngo']:
+            is_old = True
+        if k[0] != '/':
+            kana_list.append(
+                    {
+                        'romaji' : k[0],
+                        'hiragana' : k[1],
+                        'katakana' : k[2],
+                        'old' : is_old
+                        })
+    return kana_list
+
 def clearscreen():
     os.system('clear')
 
@@ -194,8 +195,8 @@ def parseopt():
                 'src' :         'hiragana',
                 'dest' :        'romaji'
             }
-    options = getopt(sys.argv[1:],'oragehs:d:' ,['diacritics', 'digraphs', 'old',
-        'random', 'extended', 'help', 'src=', 'dst='])[0]
+    options = getopt(sys.argv[1:],'oragehs:d:' ,['diacritics', 'digraphs',
+        'old', 'random', 'extended', 'help', 'src=', 'dst='])[0]
     for opt in options:
         if opt[0] == '-h' or opt[0] == '--help':
             print(f'Usage {sys.argv[0]} [OPTIONS]... [SAVE_FILE]')
