@@ -3,6 +3,7 @@
 
 from getopt import getopt
 import random
+import json
 import sys
 import os
 import re
@@ -249,14 +250,37 @@ def build_list(list_opt = None):
         random.shuffle(kana_list)
     return kana_list
 
+def fix_user_data(user):
+    for r in table_to_list(romaji):
+        if r not in user:
+            user[r] = 0
+    return user
+
+def parse_user(filename='userdata.kana'):
+    open(filename, 'a').close()
+    user_file = open(filename, 'r')
+    user_data = user_file.read()
+    user_file.close()
+
+    try:
+        user = json.loads(user_data)
+    except ValueError as e:
+        user = dict()
+    return fix_user_data(user)
+
+def save_user(user, filename='userdata.kana'):
+    user_data = open(filename, 'w')
+    user_data.write(json.dumps(user))
+    user_data.close()
+
 
 def main():
-    user_data = open('userdata.kana', 'w')
 
     # Check parameter: kana only, dakuten, handakuten, variations...
     opts = parseopt()
 
     # load previous data
+    user = parse_user('userdata.kana')
 
     # Build the training list
     review_list = build_list(opts)
@@ -275,18 +299,20 @@ def main():
 
         if c == 'z' or c == 'Z' :
             clearscreen()
-            sys.exit(1)
+            break
         elif c == 'q' or c == 'Q':
-            print('q')
+            user[k['romaji']] += 1
         elif c == 'w' or c == 'W':
-            print('w')
+            user[k['romaji']] += 1
         elif c == 'e' or c == 'E':
-            print('e')
+            user[k['romaji']] += 1
         else:
             print('How did you get here ?')
 
         print(f'It was {k[opts["dest"]]}')
         c = getch()
+
+    save_user(user)
 
 
 main()
